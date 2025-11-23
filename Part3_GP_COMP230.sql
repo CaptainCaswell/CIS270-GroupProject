@@ -61,7 +61,9 @@ CREATE TABLE Grade (
     GradeID     VARCHAR(10) UNIQUE,
     AssignID    VARCHAR(10),
     Score       INT(3),
-	FOREIGN KEY (AssignID) REFERENCES Assignment(AssignID)
+	FOREIGN KEY (AssignID) REFERENCES Assignment(AssignID),
+	StudentID   VARCHAR(10),
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
 );
 
 -- 8. STUDENT-STAFF (bridge table)
