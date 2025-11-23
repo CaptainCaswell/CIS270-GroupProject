@@ -34,11 +34,20 @@ CREATE TABLE Staff (
 
 -- 4. STUDENT
 CREATE TABLE Student (
-    StudentID   VARCHAR(10) UNIQUE,
+    StudentID   INT AUTO_INCREMENT PRIMARY KEY,
     Name        VARCHAR(50) NOT NULL,
     PhoneNumber VARCHAR(20),
-    Email       VARCHAR(100) PRIMARY KEY
+    Email       VARCHAR(100)
 );
+
+CREATE VIEW StudentView AS
+SELECT
+    StudentID,
+    CONCAT('ST', LPAD(StudentID, 3, '0')) AS SID,
+    Name,
+    PhoneNumber,
+    Email
+FROM Student;
 
 -- 5. COURSE
 CREATE TABLE Course (
@@ -62,13 +71,13 @@ CREATE TABLE Grade (
     AssignID    VARCHAR(10),
     Score       INT(3),
 	FOREIGN KEY (AssignID) REFERENCES Assignment(AssignID),
-	StudentID   VARCHAR(10),
+    StudentID   INT,
     FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
 );
 
 -- 8. STUDENT-STAFF (bridge table)
 CREATE TABLE StudentStaff (
-    StudentID   VARCHAR(10),
+    StudentID   INT,
     StaffID     VARCHAR(10),
 	FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
     FOREIGN KEY (StaffID) REFERENCES Staff(StaffID)
@@ -76,7 +85,7 @@ CREATE TABLE StudentStaff (
 
 -- 9. STUDENT-COURSE (bridge table)
 CREATE TABLE StudentCourse (
-    StudentID   VARCHAR(10),
+    StudentID   INT,
     CourseID    VARCHAR(10),
     FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
     FOREIGN KEY (CourseID) REFERENCES Course(CourseID)
@@ -123,17 +132,17 @@ INSERT INTO Staff (StaffID, Name, PhoneNumber, Email, Address, City, DeptID) VAL
 ('S010','Liam','604 555-1019','liam@email.com','98 Sunrise St','Surrey','D09');
 
 -- STUDENT (10 rows)
-INSERT INTO Student (StudentID, Name, PhoneNumber, Email) VALUES
-('ST001','Colin','604 555-2001','colin@email.com'),
-('ST002','Nina','604 555-2002','nina@email.com'),
-('ST003','Omar','604 555-2003','omar@email.com'),
-('ST004','Priya','604 555-2004','priya@email.com'),
-('ST005','Quinn','604 555-2005','quinn@email.com'),
-('ST006','Ravi','604 555-2006','ravi@email.com'),
-('ST007','Sara','604 555-2007','sara@email.com'),
-('ST008','Tom','604 555-2008','tom@email.com'),
-('ST009','Uma','604 555-2009','uma@email.com'),
-('ST010','Vik','604 555-2010','vik@email.com');
+INSERT INTO Student (Name, PhoneNumber, Email) VALUES
+('Colin','604 555-2001','colin@email.com'),
+('Nina','604 555-2002','nina@email.com'),
+('Omar','604 555-2003','omar@email.com'),
+('Priya','604 555-2004','priya@email.com'),
+('Quinn','604 555-2005','quinn@email.com'),
+('Ravi','604 555-2006','ravi@email.com'),
+('Sara','604 555-2007','sara@email.com'),
+('Tom','604 555-2008','tom@email.com'),
+('Uma','604 555-2009','uma@email.com'),
+('Vik','604 555-2010','vik@email.com');
 
 -- COURSE (10 rows)
 INSERT INTO Course (CourseID, CourseName, CourseType) VALUES
@@ -162,44 +171,43 @@ INSERT INTO Assignment (AssignID, AssignType, MaxScore, CourseID) VALUES
 ('A010','Test',50,'C009');
 
 -- GRADE (10 rows)
-INSERT INTO Grade (GradeID, AssignID, Score, StudentID) VALUES
-('G001','A001',48,'ST001'),
-('G002','A002',19,'ST002'),
-('G003','A003',92,'ST001'),
-('G004','A004',55,'ST003'),
-('G005','A005',27,'ST004'),
-('G006','A006',23,'ST005'),
-('G007','A007',45,'ST006'),
-('G008','A008',88,'ST007'),
-('G009','A009',18,'ST008'),
-('G010','A010',49,'ST009');
+INSERT INTO Grade (GradeID, AssignID, Score) VALUES
+('G001','A001',48),
+('G002','A002',19),
+('G003','A003',92),
+('G004','A004',55),
+('G005','A005',27),
+('G006','A006',23),
+('G007','A007',45),
+('G008','A008',88),
+('G009','A009',18),
+('G010','A010',49);
 
 -- STUDENT–STAFF (10 rows)
 INSERT INTO StudentStaff (StudentID, StaffID) VALUES
-('ST001','S001'),
-('ST001','S002'),
-('ST002','S003'),
-('ST003','S004'),
-('ST004','S005'),
-('ST005','S006'),
-('ST006','S007'),
-('ST007','S008'),
-('ST008','S009'),
-('ST009','S010');
+(1,'S001'),
+(1,'S002'),
+(2,'S003'),
+(3,'S004'),
+(4,'S005'),
+(5,'S006'),
+(6,'S007'),
+(7,'S008'),
+(8,'S009'),
+(9,'S010');
 
 -- STUDENT–COURSE (10 rows)
 INSERT INTO StudentCourse (StudentID, CourseID) VALUES
-('ST001','C001'),
-('ST001','C002'),
-('ST002','C001'),
-('ST003','C003'),
-('ST004','C004'),
-('ST005','C005'),
-('ST006','C006'),
-('ST007','C007'),
-
-('ST008','C008'),
-('ST009','C009');
+(1,'C001'),
+(1,'C002'),
+(2,'C001'),
+(3,'C003'),
+(4,'C004'),
+(5,'C005'),
+(6,'C006'),
+(7,'C007'),
+(8,'C008'),
+(9,'C009');
 /*--------------------------------------------------------------------------------------------------*/
 /*
 Manager (ManagerID, Name, PhoneNumber, Email, Address, City)
