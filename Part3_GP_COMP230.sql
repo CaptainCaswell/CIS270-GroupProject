@@ -67,7 +67,7 @@ CREATE TABLE Assignment (
 
 -- 7. GRADE
 CREATE TABLE Grade (
-    GradeID     VARCHAR(10) UNIQUE,
+    GradeID     INT AUTO_INCREMENT PRIMARY KEY,
     AssignID    VARCHAR(10),
     Score       INT(3),
 	FOREIGN KEY (AssignID) REFERENCES Assignment(AssignID),
@@ -171,17 +171,17 @@ INSERT INTO Assignment (AssignID, AssignType, MaxScore, CourseID) VALUES
 ('A010','Test',50,'C009');
 
 -- GRADE (10 rows)
-INSERT INTO Grade (GradeID, AssignID, Score) VALUES
-('G001','A001',48),
-('G002','A002',19),
-('G003','A003',92),
-('G004','A004',55),
-('G005','A005',27),
-('G006','A006',23),
-('G007','A007',45),
-('G008','A008',88),
-('G009','A009',18),
-('G010','A010',49);
+INSERT INTO Grade (AssignID, Score) VALUES
+('A001',48),
+('A002',19),
+('A003',92),
+('A004',55),
+('A005',27),
+('A006',23),
+('A007',45),
+('A008',88),
+('A009',18),
+('A010',49);
 
 -- STUDENT–STAFF (10 rows)
 INSERT INTO StudentStaff (StudentID, StaffID) VALUES
