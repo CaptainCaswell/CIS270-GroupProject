@@ -230,7 +230,7 @@ ORDER BY d.DeptID;
 
 -- Query 2: Find all students who are taking more than 1 course.
 USE STACK;
-SELECT s.StudentID, s.Name, COUNT(sc.CourseID) AS TotalCourse FROM Student s
+SELECT s.SID AS StudentID, s.Name, COUNT(sc.CourseID) AS TotalCourse FROM StudentView s
 JOIN StudentCourse sc ON s.StudentID = sc.StudentID
 JOIN Course c ON sc.CourseID = c.CourseID
 GROUP BY s.StudentID, s.Name
@@ -244,7 +244,7 @@ JOIN Manager m ON d.ManagerID = m.ManagerID
 ORDER BY s.StaffID;
 
 -- Query 4: List all students supervised by staff in the Math department.
-SELECT DISTINCT s.StudentID, s.Name AS Student_Name FROM Student s
+SELECT DISTINCT s.SID AS StudentID, s.Name AS Student_Name FROM StudentView s
 JOIN StudentStaff ss ON s.StudentID = ss.StudentID
 JOIN Staff sf ON ss.StaffID = sf.StaffID
 JOIN Department d ON sf.DeptID = d.DeptID
@@ -262,8 +262,8 @@ JOIN StudentCourse sc ON c.CourseID = sc.CourseID
 GROUP BY c.CourseName;
 
 -- Query 7: Display each student with their total score across all assignments.
-SELECT s.StudentID, s.Name, SUM(g.Score) AS TotalScore
-FROM Student s
+SELECT s.SID AS StudentID, s.Name, SUM(g.Score) AS TotalScore
+FROM StudentView s
 JOIN StudentCourse sc ON s.StudentID = sc.StudentID
 JOIN Assignment a ON sc.CourseID = a.CourseID
 JOIN Grade g ON a.AssignID = g.AssignID
@@ -283,7 +283,7 @@ GROUP BY a.AssignID, a.AssignType, a.MaxScore
 HAVING AVG(g.Score) > (a.MaxScore * 0.95);
 
 -- Query 10: List all students along with how many assignments they have grades for.
-SELECT s.StudentID, s.Name, COUNT(g.GradeID) AS TotalGradedAssignments FROM Student s
+SELECT s.SID AS StudentID, s.Name, COUNT(g.GradeID) AS TotalGradedAssignments FROM StudentView s
 JOIN StudentCourse sc ON s.StudentID = sc.StudentID
 JOIN Assignment a ON sc.CourseID = a.CourseID
 JOIN Grade g ON a.AssignID = g.AssignID
@@ -296,7 +296,7 @@ GROUP BY c.CourseName
 ORDER BY TotalAssignmentWeight DESC;
 
 -- Query 12: List students who have at least one grade above 90.
-SELECT DISTINCT s.StudentID, s.Name FROM Student s
+SELECT DISTINCT s.SID AS StudentID, s.Name FROM StudentView s
 JOIN StudentCourse sc ON s.StudentID = sc.StudentID
 JOIN Assignment a ON sc.CourseID = a.CourseID
 JOIN Grade g ON a.AssignID = g.AssignID
@@ -307,7 +307,7 @@ SELECT CourseType, COUNT(CourseID) AS TotalCourses FROM Course
 GROUP BY CourseType;
 
 -- Query 14: List all students who are enrolled in at least one course that is an Online course.
-SELECT s.StudentID, s.Name FROM Student s
+SELECT s.SID AS StudentID, s.Name FROM StudentView s
 WHERE EXISTS(
 SELECT * FROM StudentCourse sc
 JOIN Course c ON sc.CourseID = c.CourseID
@@ -319,6 +319,3 @@ SELECT d.DeptID, d.DeptName FROM Department d
 WHERE NOT EXISTS (
 SELECT * FROM Staff s
 WHERE d.DeptID = s.DeptID);
-
-
-
