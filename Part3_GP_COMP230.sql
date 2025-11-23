@@ -162,17 +162,17 @@ INSERT INTO Assignment (AssignID, AssignType, MaxScore, CourseID) VALUES
 ('A010','Test',50,'C009');
 
 -- GRADE (10 rows)
-INSERT INTO Grade (GradeID, AssignID, Score) VALUES
-('G001','A001',48),
-('G002','A002',19),
-('G003','A003',92),
-('G004','A004',55),
-('G005','A005',27),
-('G006','A006',23),
-('G007','A007',45),
-('G008','A008',88),
-('G009','A009',18),
-('G010','A010',49);
+INSERT INTO Grade (GradeID, AssignID, Score, StudentID) VALUES
+('G001','A001',48,'ST001'),
+('G002','A002',19,'ST002'),
+('G003','A003',92,'ST001'),
+('G004','A004',55,'ST003'),
+('G005','A005',27,'ST004'),
+('G006','A006',23,'ST005'),
+('G007','A007',45,'ST006'),
+('G008','A008',88,'ST007'),
+('G009','A009',18,'ST008'),
+('G010','A010',49,'ST009');
 
 -- STUDENT–STAFF (10 rows)
 INSERT INTO StudentStaff (StudentID, StaffID) VALUES
