@@ -43,7 +43,7 @@ CREATE TABLE Student (
 CREATE VIEW StudentView AS
 SELECT
     StudentID,
-    CONCAT('ST', LPAD(StudentID, 3, '0')) AS SID,
+    CONCAT('ST', LPAD(StudentID, 3, '0')) COLLATE utf8mb4_general_ci AS SID,
     Name,
     PhoneNumber,
     Email
